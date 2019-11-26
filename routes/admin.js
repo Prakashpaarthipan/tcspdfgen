@@ -51,7 +51,7 @@ router.get('/', function(req, res, next) {
     async function createNew()
     {
       var Filename = reqid+"_"+year+"_"+test+"_AP.pdf";
-  const browser = await puppeteer.launch();
+  const browser = await puppeteer.launch({ args: ['--no-sandbox'] });
   const page = await browser.newPage();
   const URL = 'http://www.tcsportal.com/approval-desk/print_request_open.php?action=print&reqid='+reqid+'&year='+year+'&rsrid=1&creid='+creid+'&typeid='+typeid;
   const URL2 = 'http://www.avanthi.edu.in/portal/login.php';

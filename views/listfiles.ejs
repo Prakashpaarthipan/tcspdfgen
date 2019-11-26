@@ -1,0 +1,16 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Demo</title>
+    <link rel='stylesheet' href='/stylesheets/style.css' />
+  </head>
+  <body>
+    <h1>List All Upload folders</h1>
+    <ol>
+        <% i=1;
+        list.forEach(function(li) { %>
+            <li><a href="/txtfiles/<%= li %>" target="_blank"><%= li %></a></li>
+        <% }); %>
+    </ol>
+  </body>
+</html>

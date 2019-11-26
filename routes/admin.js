@@ -2,6 +2,7 @@ var express = require('express');
 var router = express.Router();
 var moment = require('moment');
 var fs = require('fs');
+const puppeteer = require('puppeteer');
 
 /* GET users listing. */
 router.get('/', function(req, res, next) {
@@ -25,8 +26,7 @@ router.get('/', function(req, res, next) {
     res.send('respond with a resource : - '+month+'::'+ReplaceTime+'\n');
   });
   router.get('/listall', function(req, res, next) { 
-    debugger;
-    console.log("TESTSEST");   
+  
         //passsing directoryPath and callback function
         fs.readdir('uploads', function (err, files) {
           //handling error
@@ -41,4 +41,25 @@ router.get('/', function(req, res, next) {
           });
         });           
   });
+  router.get('/genpdf', function(req, res, next) { 
+    var reqid = req.body.reqid;
+    var year = req.body.year;
+    var rsrid = req.body.rsrid;
+    var creid = req.body.creid;
+    var typeid = req.body.typeid;
+    var test = req.body.test;
+    async function createNew()
+    {
+      var Filename = reqid+"_"+year+"_"+test+"_AP.pdf";
+  const browser = await puppeteer.launch();
+  const page = await browser.newPage();
+  const URL = 'http://www.tcsportal.com/approval-desk/print_request_open.php?action=print&reqid='+reqid+'&year='+year+'&rsrid=1&creid='+creid+'&typeid='+typeid;
+  const URL2 = 'https://www.google.com/';
+  const URL3 = 'https://portal.thechennaisilks.com//approval-desk/print_request_open.php?action=print&reqid='+reqid+'&year='+year+'&rsrid=1&creid='+creid+'&typeid='+typeid;
+  await page.goto(URL3, {waitUntil: 'load', timeout: 0});
+  await page.pdf({path: 'uploads/'+Filename, format: 'A4'});
+  await browser.close(); 
+  res.send("Created");
+    }createNew();
+});
   module.exports = router;

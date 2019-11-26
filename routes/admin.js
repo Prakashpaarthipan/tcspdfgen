@@ -54,12 +54,14 @@ router.get('/', function(req, res, next) {
   const browser = await puppeteer.launch();
   const page = await browser.newPage();
   const URL = 'http://www.tcsportal.com/approval-desk/print_request_open.php?action=print&reqid='+reqid+'&year='+year+'&rsrid=1&creid='+creid+'&typeid='+typeid;
-  const URL2 = 'https://www.google.com/';
+  const URL2 = 'http://www.avanthi.edu.in/portal/login.php';
   const URL3 = 'https://portal.thechennaisilks.com//approval-desk/print_request_open.php?action=print&reqid='+reqid+'&year='+year+'&rsrid=1&creid='+creid+'&typeid='+typeid;
   await page.goto(URL2, {waitUntil: 'load', timeout: 0});
   await page.pdf({path: 'uploads/'+Filename, format: 'A4'});
   await browser.close(); 
+  res.status(200);
   res.send("Created");
-    }createNew();
+    }
+    createNew();
 });
   module.exports = router;
